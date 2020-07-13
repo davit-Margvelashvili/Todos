@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿#pragma warning disable RCS1194 // Implement exception constructors.
 
 namespace Todos.Core.Exceptions
 {
@@ -11,3 +9,5 @@ namespace Todos.Core.Exceptions
         }
     }
 }
+
+#pragma warning restore RCS1194 // Implement exception constructors.
