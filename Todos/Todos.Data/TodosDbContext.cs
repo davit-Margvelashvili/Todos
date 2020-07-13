@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.EntityFrameworkCore;
+using Todos.Core.Models;
+
+namespace Todos.Data
+{
+    public class TodosDbContext : DbContext
+    {
+        public DbSet<Todo> Todos { get; set; }
+        public DbSet<User> Users { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDb; Initial Catalog = Todos");
+        }
+    }
+}
