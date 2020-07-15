@@ -15,9 +15,10 @@ namespace Todos.Data
         {
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDb; Initial Catalog = Todos");
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+                optionsBuilder.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDb; Initial Catalog = Todos");
+        }
     }
 }
