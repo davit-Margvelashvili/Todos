@@ -7,11 +7,11 @@ using Todos.Data;
 
 namespace Todos.Services
 {
-    public class TodoService : ITodoService
+    public class TodoCommandService : ITodoCommandService
     {
         private readonly TodosDbContext _context;
 
-        public TodoService(TodosDbContext context)
+        public TodoCommandService(TodosDbContext context)
         {
             _context = context;
         }

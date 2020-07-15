@@ -6,7 +6,7 @@ using Todos.Core.Models;
 
 namespace Todos.Core.Abstractions
 {
-    public interface ITodoService
+    public interface ITodoCommandService
     {
         Task<Todo> AddAsync(Todo todo);
 
