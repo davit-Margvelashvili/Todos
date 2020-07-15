@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using Microsoft.Extensions.Options;
 using Todos.Core.Abstractions;
 using Todos.Core.Models;
 using Todos.Core.Utils;
@@ -16,7 +11,7 @@ using Xunit.Abstractions;
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 
-namespace Todos.Tests
+namespace Todos.Tests.Tests
 {
     public class TodoServiceShould
     {

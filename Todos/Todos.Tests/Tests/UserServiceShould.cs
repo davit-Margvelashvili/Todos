@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Todos.Core.Exceptions;
 using Todos.Core.Models;
 using Todos.Data;
@@ -9,7 +9,7 @@ using Xunit.Abstractions;
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 
-namespace Todos.Tests
+namespace Todos.Tests.Tests
 {
     public class UserServiceShould
     {
