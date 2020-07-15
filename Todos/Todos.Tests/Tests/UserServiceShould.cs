@@ -1,13 +1,11 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using Todos.Core.Exceptions;
+using Todos.Core.Models;
 using Todos.Data;
 using Todos.Services;
 using Xunit;
 using Xunit.Abstractions;
-using Microsoft.EntityFrameworkCore.InMemory;
-using Todos.Core.Exceptions;
-using Todos.Core.Models;
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 
@@ -16,7 +14,6 @@ namespace Todos.Tests
     public class UserServiceShould
     {
         public ITestOutputHelper Output { get; }
-        private UserService _userService;
 
         public UserServiceShould(ITestOutputHelper output)
         {
@@ -26,11 +23,9 @@ namespace Todos.Tests
         [Fact]
         public async Task RegisterUser()
         {
-            var options = new DbContextOptionsBuilder().UseInMemoryDatabase("RegisterUserDb").Options;
-            var dbContext = new TodosDbContext(options);
-            _userService = new UserService(dbContext);
+            var userService = CreateUserService(nameof(RegisterUser));
 
-            var user = await _userService.RegisterAsync(new User
+            var user = await userService.RegisterAsync(new User
             {
                 Email = "Test@gmail.com",
                 Password = "Test123",
@@ -46,11 +41,9 @@ namespace Todos.Tests
         [Fact]
         public async Task ThrowUserAlreadyRegisteredException()
         {
-            var options = new DbContextOptionsBuilder().UseInMemoryDatabase("ThrowUserAlreadyRegisteredExceptionDb").Options;
-            var dbContext = new TodosDbContext(options);
-            _userService = new UserService(dbContext);
+            var userService = CreateUserService(nameof(ThrowUserAlreadyRegisteredException));
 
-            var user = await _userService.RegisterAsync(new User
+            var user = await userService.RegisterAsync(new User
             {
                 Email = "Test@gmail.com",
                 Password = "Test123",
@@ -59,7 +52,7 @@ namespace Todos.Tests
 
             Assert.Equal(1, user.Id);
 
-            await Assert.ThrowsAsync<UserAlreadyRegisteredException>(() => _userService.RegisterAsync(new User
+            await Assert.ThrowsAsync<UserAlreadyRegisteredException>(() => userService.RegisterAsync(new User
             {
                 Email = "Test@gmail.com",
                 Password = "Test123",
@@ -70,11 +63,9 @@ namespace Todos.Tests
         [Fact]
         public async Task LoginUserWhenCorrectUserNameAndPassword()
         {
-            var options = new DbContextOptionsBuilder().UseInMemoryDatabase("LoginUserWhenCorrectUserNameAndPasswordDb").Options;
-            var dbContext = new TodosDbContext(options);
-            _userService = new UserService(dbContext);
+            var userService = CreateUserService(nameof(LoginUserWhenCorrectUserNameAndPassword));
 
-            var user = await _userService.RegisterAsync(new User
+            var user = await userService.RegisterAsync(new User
             {
                 Email = "Test@gmail.com",
                 Password = "Test123",
@@ -83,24 +74,22 @@ namespace Todos.Tests
 
             Assert.Equal(1, user.Id);
 
-            var loggedIn = await _userService.LoginAsync(user);
+            var loggedIn = await userService.LoginAsync(user);
             Assert.True(loggedIn);
 
-            loggedIn = await _userService.LoginAsync(user.Email, user.Password);
+            loggedIn = await userService.LoginAsync(user.Email, user.Password);
             Assert.True(loggedIn);
         }
 
         [Fact]
         public async Task NotLoginUserWhenIncorrectUserNameAndPassword()
         {
-            var options = new DbContextOptionsBuilder().UseInMemoryDatabase("NotLoginUserWhenIncorrectUserNameAndPassword").Options;
-            var dbContext = new TodosDbContext(options);
-            _userService = new UserService(dbContext);
+            var userService = CreateUserService(nameof(NotLoginUserWhenIncorrectUserNameAndPassword));
 
             const string wrongUserName = "Wrong User Name";
             const string wrongPassword = "Wrong Password";
 
-            var user = await _userService.RegisterAsync(new User
+            var user = await userService.RegisterAsync(new User
             {
                 Email = "Test@gmail.com",
                 Password = "Test123",
@@ -109,15 +98,24 @@ namespace Todos.Tests
 
             Assert.Equal(1, user.Id);
 
-            var loggedIn = await _userService.LoginAsync(new User
+            var loggedIn = await userService.LoginAsync(new User
             {
                 Email = wrongUserName,
                 Password = wrongPassword
             });
             Assert.False(loggedIn);
 
-            loggedIn = await _userService.LoginAsync(wrongUserName, wrongPassword);
+            loggedIn = await userService.LoginAsync(wrongUserName, wrongPassword);
             Assert.False(loggedIn);
+        }
+
+        private static UserService CreateUserService(string databaseName)
+        {
+            var options = new DbContextOptionsBuilder().UseInMemoryDatabase(databaseName)
+                .Options;
+            var dbContext = new TodosDbContext(options);
+            var userService = new UserService(dbContext);
+            return userService;
         }
     }
 }
