@@ -36,9 +36,9 @@ namespace Todos.WinFormsUi
                 .AddSingleton<ITodoQueryService, TodoQueryService>()
                 .AddSingleton<IUserService, UserService>()
                 .AddSingleton<IDateTimeProvider, DateTimeProvider>()
-                .AddSingleton<MainForm>();
-            //.AddDbContext<TodosDbContext>(options =>
-            //    options.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDb; Initial Catalog = Todos"));
+                .AddSingleton<MainForm>()
+                .AddDbContext<TodosDbContext>(options =>
+                    options.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDb; Initial Catalog = Todos"));
         }
     }
 }
