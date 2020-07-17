@@ -25,7 +25,7 @@ namespace Todos.Services
 
         public Task<Todo> EditAsync(Todo todo)
         {
-            var result = _context.Update(todo);
+            var result = _context.Todos.Update(todo);
             return Task.FromResult(result.Entity);
         }
 

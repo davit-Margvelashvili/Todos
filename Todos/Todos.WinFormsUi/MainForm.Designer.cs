@@ -46,9 +46,9 @@
             this.AddTodoButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(186)))), ((int)(((byte)(168)))));
             this.AddTodoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AddTodoButton.ForeColor = System.Drawing.Color.White;
-            this.AddTodoButton.Location = new System.Drawing.Point(12, 547);
+            this.AddTodoButton.Location = new System.Drawing.Point(16, 563);
             this.AddTodoButton.Name = "AddTodoButton";
-            this.AddTodoButton.Size = new System.Drawing.Size(320, 51);
+            this.AddTodoButton.Size = new System.Drawing.Size(320, 35);
             this.AddTodoButton.TabIndex = 0;
             this.AddTodoButton.Text = "Add Todo";
             this.AddTodoButton.UseVisualStyleBackColor = false;

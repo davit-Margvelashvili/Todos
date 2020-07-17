@@ -24,6 +24,7 @@ namespace Todos.WinFormsUi
 
         private async void AddTodoButton_ClickAsync(object sender, EventArgs e)
         {
+            AddTodoButton.Enabled = false;
             var newTodo = new Todo
             {
                 Title = TitleTextBox.Text,
@@ -32,8 +33,9 @@ namespace Todos.WinFormsUi
                 DueDate = DueDatePicker.Value
             };
             await _todoCommandService.AddAsync(newTodo);
+            AddTodoButton.Enabled = true;
 
-            MessageBox.Show("Todo Added");
+            //MessageBox.Show("Todo Added");
         }
     }
 }
