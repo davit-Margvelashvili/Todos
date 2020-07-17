@@ -37,13 +37,13 @@
             this.TitleTextBox = new System.Windows.Forms.TextBox();
             this.AddTodoButton = new System.Windows.Forms.Button();
             this.DueDateLabel = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.StatusBox = new System.Windows.Forms.ComboBox();
+            this.PriorityBox = new System.Windows.Forms.ComboBox();
             this.StatusLabel = new System.Windows.Forms.Label();
             this.PriotiryLabel = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.UsersBox = new System.Windows.Forms.ComboBox();
             this.AssignToLabel = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.CancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // DueDatePicker
@@ -141,21 +141,21 @@
             this.DueDateLabel.TabIndex = 16;
             this.DueDateLabel.Text = "Due Date";
             // 
-            // comboBox1
+            // StatusBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(12, 194);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(157, 30);
-            this.comboBox1.TabIndex = 17;
+            this.StatusBox.FormattingEnabled = true;
+            this.StatusBox.Location = new System.Drawing.Point(12, 194);
+            this.StatusBox.Name = "StatusBox";
+            this.StatusBox.Size = new System.Drawing.Size(157, 30);
+            this.StatusBox.TabIndex = 17;
             // 
-            // comboBox2
+            // PriorityBox
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(175, 194);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(157, 30);
-            this.comboBox2.TabIndex = 18;
+            this.PriorityBox.FormattingEnabled = true;
+            this.PriorityBox.Location = new System.Drawing.Point(175, 194);
+            this.PriorityBox.Name = "PriorityBox";
+            this.PriorityBox.Size = new System.Drawing.Size(157, 30);
+            this.PriorityBox.TabIndex = 18;
             // 
             // StatusLabel
             // 
@@ -178,13 +178,13 @@
             this.PriotiryLabel.TabIndex = 20;
             this.PriotiryLabel.Text = "Priority";
             // 
-            // comboBox3
+            // UsersBox
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(12, 248);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(324, 30);
-            this.comboBox3.TabIndex = 21;
+            this.UsersBox.FormattingEnabled = true;
+            this.UsersBox.Location = new System.Drawing.Point(12, 248);
+            this.UsersBox.Name = "UsersBox";
+            this.UsersBox.Size = new System.Drawing.Size(324, 30);
+            this.UsersBox.TabIndex = 21;
             // 
             // AssignToLabel
             // 
@@ -197,19 +197,20 @@
             this.AssignToLabel.TabIndex = 22;
             this.AssignToLabel.Text = "Assigned To";
             // 
-            // button1
+            // CancelButton
             // 
-            this.button1.BackColor = System.Drawing.Color.Gainsboro;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(186)))), ((int)(((byte)(168)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(175, 449);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(157, 35);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Cancel";
-            this.button1.UseVisualStyleBackColor = false;
+            this.CancelButton.BackColor = System.Drawing.Color.Gainsboro;
+            this.CancelButton.FlatAppearance.BorderSize = 0;
+            this.CancelButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightGray;
+            this.CancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CancelButton.ForeColor = System.Drawing.Color.Black;
+            this.CancelButton.Location = new System.Drawing.Point(175, 449);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(157, 35);
+            this.CancelButton.TabIndex = 8;
+            this.CancelButton.Text = "Cancel";
+            this.CancelButton.UseVisualStyleBackColor = false;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // TodoEditorForm
             // 
@@ -217,11 +218,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(345, 496);
             this.Controls.Add(this.AssignToLabel);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.UsersBox);
             this.Controls.Add(this.PriotiryLabel);
             this.Controls.Add(this.StatusLabel);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.PriorityBox);
+            this.Controls.Add(this.StatusBox);
             this.Controls.Add(this.DueDateLabel);
             this.Controls.Add(this.DueDatePicker);
             this.Controls.Add(this.StartDateLabel);
@@ -230,7 +231,7 @@
             this.Controls.Add(this.TitleLabel);
             this.Controls.Add(this.DescriptionTextBox);
             this.Controls.Add(this.TitleTextBox);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.AddTodoButton);
             this.Font = new System.Drawing.Font("Sylfaen", 12F);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -240,6 +241,7 @@
             this.MinimumSize = new System.Drawing.Size(361, 535);
             this.Name = "TodoEditorForm";
             this.Text = "TodoEditorForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TodoEditorForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -256,12 +258,12 @@
         private System.Windows.Forms.TextBox TitleTextBox;
         private System.Windows.Forms.Button AddTodoButton;
         private System.Windows.Forms.Label DueDateLabel;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox StatusBox;
+        private System.Windows.Forms.ComboBox PriorityBox;
         private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.Label PriotiryLabel;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox UsersBox;
         private System.Windows.Forms.Label AssignToLabel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button CancelButton;
     }
 }

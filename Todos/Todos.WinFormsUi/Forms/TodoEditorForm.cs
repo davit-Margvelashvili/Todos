@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Identity.Client;
 using Todos.Core.Abstractions;
 using Todos.Core.Models;
 
@@ -20,8 +21,12 @@ namespace Todos.WinFormsUi.Forms
 
         public TodoEditorForm()
         {
-            _todoCommandService = ServiceContainer.Get<ITodoCommandService>();
             InitializeComponent();
+
+            _todoCommandService = ServiceContainer.Get<ITodoCommandService>();
+
+            StatusBox.DataSource = Enum.GetNames(typeof(TodoStatus));
+            PriorityBox.DataSource = Enum.GetNames(typeof(TodoPriority));
         }
 
         private async void AddTodoButton_ClickAsync(object sender, EventArgs e)
@@ -39,6 +44,16 @@ namespace Todos.WinFormsUi.Forms
             TodoCreated?.Invoke(this, result);
 
             AddTodoButton.Enabled = true;
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void TodoEditorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = MessageBox.Show("Do you want to close?", "Closing...", MessageBoxButtons.YesNo) == DialogResult.No;
         }
     }
 }
