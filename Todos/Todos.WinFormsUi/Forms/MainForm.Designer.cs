@@ -1,4 +1,4 @@
-﻿namespace Todos.WinFormsUi
+﻿namespace Todos.WinFormsUi.Forms
 {
     partial class MainForm
     {
