@@ -16,6 +16,8 @@ namespace Todos.WinFormsUi.Forms
     public partial class TodoEditorForm : Form
     {
         private readonly ITodoCommandService _todoCommandService;
+        private readonly IUserQueryService _userQueryService;
+        private List<User> _users;
 
         public event EventHandler<Todo> TodoCreated;
 
@@ -24,6 +26,7 @@ namespace Todos.WinFormsUi.Forms
             InitializeComponent();
 
             _todoCommandService = ServiceContainer.Get<ITodoCommandService>();
+            _userQueryService = ServiceContainer.Get<IUserQueryService>();
 
             StatusBox.DataSource = Enum.GetNames(typeof(TodoStatus));
             PriorityBox.DataSource = Enum.GetNames(typeof(TodoPriority));
@@ -54,6 +57,13 @@ namespace Todos.WinFormsUi.Forms
         private void TodoEditorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = MessageBox.Show("Do you want to close?", "Closing...", MessageBoxButtons.YesNo) == DialogResult.No;
+        }
+
+        private async void TodoEditorForm_LoadAsync(object sender, EventArgs e)
+        {
+            _users = await _userQueryService.GetAllAsync();
+            UsersBox.DataSource = _users;
+            UsersBox.DisplayMember = nameof(User.Name);
         }
     }
 }

@@ -180,6 +180,8 @@
             // 
             // UsersBox
             // 
+            this.UsersBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.UsersBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.UsersBox.FormattingEnabled = true;
             this.UsersBox.Location = new System.Drawing.Point(12, 248);
             this.UsersBox.Name = "UsersBox";
@@ -242,6 +244,7 @@
             this.Name = "TodoEditorForm";
             this.Text = "TodoEditorForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TodoEditorForm_FormClosing);
+            this.Load += new System.EventHandler(this.TodoEditorForm_LoadAsync);
             this.ResumeLayout(false);
             this.PerformLayout();
 
