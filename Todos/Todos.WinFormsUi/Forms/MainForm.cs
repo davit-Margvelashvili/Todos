@@ -10,34 +10,28 @@ namespace Todos.WinFormsUi.Forms
 {
     public partial class MainForm : Form
     {
-        private readonly ITodoCommandService _todoCommandService;
         private readonly ITodoQueryService _todoQueryService;
 
         private List<Todo> _todos;
 
-        public MainForm(ITodoCommandService todoCommandService, ITodoQueryService todoQueryService)
+        public MainForm(ITodoQueryService todoQueryService)
         {
             InitializeComponent();
 
-            _todoCommandService = todoCommandService;
             _todoQueryService = todoQueryService;
         }
 
-        private async void AddTodoButton_ClickAsync(object sender, EventArgs e)
+        private void AddTodoButton_Click(object sender, EventArgs e)
         {
-            AddTodoButton.Enabled = false;
-            var newTodo = new Todo
-            {
-                Title = TitleTextBox.Text,
-                Description = DescriptionTextBox.Text,
-                StartDate = StartDatePicker.Value,
-                DueDate = DueDatePicker.Value
-            };
-            await _todoCommandService.AddAsync(newTodo);
+            var todoEditorForm = new TodoEditorForm();
+            todoEditorForm.TodoCreated += TodoEditorForm_TodoCreated;
+            todoEditorForm.ShowDialog();
+        }
+
+        private void TodoEditorForm_TodoCreated(object sender, Todo newTodo)
+        {
             _todos.Add(newTodo);
             PopulateTodos();
-
-            AddTodoButton.Enabled = true;
         }
 
         private async void MainForm_LoadAsync(object sender, EventArgs e)

@@ -27,6 +27,8 @@ namespace Todos.WinFormsUi
             {
                 var mainForm = serviceProvider.GetRequiredService<MainForm>();
 
+                ServiceContainer.Initializer(serviceProvider);
+
                 Application.Run(mainForm);
             }
         }
