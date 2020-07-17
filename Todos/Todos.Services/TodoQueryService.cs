@@ -18,18 +18,16 @@ namespace Todos.Services
             _context = context;
         }
 
-        public async Task<Todo> GetByIdAsync(int todoId) => await _context.Todos.FindAsync(todoId);
+        public async Task<Todo> GetByIdAsync(int todoId) =>
+            await _context.Todos.FindAsync(todoId);
 
-        public Task<IEnumerable<Todo>> GetByUserAsync(int userId)
-        {
-            IEnumerable<Todo> todos = _context.Todos.Where(todo => todo.UserId == userId).ToList();
-            return Task.FromResult(todos);
-        }
+        public Task<List<Todo>> GetByUserAsync(int userId) =>
+            Task.FromResult(_context.Todos.Where(todo => todo.UserId == userId).ToList());
 
-        public Task<IEnumerable<Todo>> QueryAsync(Func<Todo, bool> predicate)
-        {
-            IEnumerable<Todo> todos = _context.Todos.Where(predicate).ToList();
-            return Task.FromResult(todos);
-        }
+        public Task<List<Todo>> GetAllAsync() =>
+            Task.FromResult(_context.Todos.ToList());
+
+        public Task<List<Todo>> QueryAsync(Func<Todo, bool> predicate) =>
+            Task.FromResult(_context.Todos.Where(predicate).ToList());
     }
 }

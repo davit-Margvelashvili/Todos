@@ -35,8 +35,8 @@
             this.DescriptionLabel = new System.Windows.Forms.Label();
             this.StartDatePicker = new System.Windows.Forms.DateTimePicker();
             this.StartDateLabel = new System.Windows.Forms.Label();
-            this.DueDateLabel = new System.Windows.Forms.Label();
             this.DueDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.TodoListBox = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // AddTodoButton
@@ -110,16 +110,6 @@
             this.StartDateLabel.TabIndex = 6;
             this.StartDateLabel.Text = "Start Date";
             // 
-            // DueDateLabel
-            // 
-            this.DueDateLabel.AutoSize = true;
-            this.DueDateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(69)))), ((int)(((byte)(69)))));
-            this.DueDateLabel.Location = new System.Drawing.Point(8, 139);
-            this.DueDateLabel.Name = "DueDateLabel";
-            this.DueDateLabel.Size = new System.Drawing.Size(72, 22);
-            this.DueDateLabel.TabIndex = 8;
-            this.DueDateLabel.Text = "Due Date";
-            // 
             // DueDatePicker
             // 
             this.DueDatePicker.CalendarForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(6)))), ((int)(((byte)(239)))), ((int)(((byte)(145)))));
@@ -131,11 +121,20 @@
             this.DueDatePicker.Size = new System.Drawing.Size(320, 27);
             this.DueDatePicker.TabIndex = 7;
             // 
+            // TodoListBox
+            // 
+            this.TodoListBox.FormattingEnabled = true;
+            this.TodoListBox.ItemHeight = 22;
+            this.TodoListBox.Location = new System.Drawing.Point(714, 12);
+            this.TodoListBox.Name = "TodoListBox";
+            this.TodoListBox.Size = new System.Drawing.Size(351, 576);
+            this.TodoListBox.TabIndex = 8;
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1077, 610);
-            this.Controls.Add(this.DueDateLabel);
+            this.Controls.Add(this.TodoListBox);
             this.Controls.Add(this.DueDatePicker);
             this.Controls.Add(this.StartDateLabel);
             this.Controls.Add(this.StartDatePicker);
@@ -148,6 +147,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "Todos";
+            this.Load += new System.EventHandler(this.MainForm_LoadAsync);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,8 +162,8 @@
         private System.Windows.Forms.Label DescriptionLabel;
         private System.Windows.Forms.DateTimePicker StartDatePicker;
         private System.Windows.Forms.Label StartDateLabel;
-        private System.Windows.Forms.Label DueDateLabel;
         private System.Windows.Forms.DateTimePicker DueDatePicker;
+        private System.Windows.Forms.ListBox TodoListBox;
     }
 }
 

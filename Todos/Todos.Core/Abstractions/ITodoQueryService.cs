@@ -10,8 +10,10 @@ namespace Todos.Core.Abstractions
     {
         Task<Todo> GetByIdAsync(int todoId);
 
-        Task<IEnumerable<Todo>> GetByUserAsync(int userId);
+        Task<List<Todo>> GetByUserAsync(int userId);
 
-        Task<IEnumerable<Todo>> QueryAsync(Func<Todo, bool> where);
+        Task<List<Todo>> GetAllAsync();
+
+        Task<List<Todo>> QueryAsync(Func<Todo, bool> where);
     }
 }
