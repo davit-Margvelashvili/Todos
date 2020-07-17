@@ -32,6 +32,9 @@ namespace Todos.WinFormsUi.Forms
         {
             _todos.Add(newTodo);
             PopulateTodos();
+
+            if (sender is TodoEditorForm editorForm)
+                editorForm.TodoCreated -= TodoEditorForm_TodoCreated;
         }
 
         private async void MainForm_LoadAsync(object sender, EventArgs e)
