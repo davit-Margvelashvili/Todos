@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Todos.Core.Abstractions;
 using Todos.Core.Models;
+using Todos.WinFormsUi.UserControls;
 
 namespace Todos.WinFormsUi.Forms
 {
@@ -52,6 +53,10 @@ namespace Todos.WinFormsUi.Forms
         {
             TodoListBox.Items.Clear();
             TodoListBox.Items.AddRange(_todos.Select(todo => $"{todo.Title} {todo.Status}").ToArray());
+
+            var todoItemControls = _todos.Select(todo => new TodoItemControl(todo)).ToArray();
+
+            TodoListView.Controls.AddRange(todoItemControls);
         }
     }
 }

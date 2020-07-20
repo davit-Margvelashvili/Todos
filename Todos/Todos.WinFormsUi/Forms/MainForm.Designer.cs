@@ -30,6 +30,7 @@
         {
             this.AddTodoButton = new System.Windows.Forms.Button();
             this.TodoListBox = new System.Windows.Forms.ListBox();
+            this.TodoListView = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
             // AddTodoButton
@@ -53,13 +54,22 @@
             this.TodoListBox.ItemHeight = 22;
             this.TodoListBox.Location = new System.Drawing.Point(16, 12);
             this.TodoListBox.Name = "TodoListBox";
-            this.TodoListBox.Size = new System.Drawing.Size(351, 532);
+            this.TodoListBox.Size = new System.Drawing.Size(236, 532);
             this.TodoListBox.TabIndex = 8;
+            // 
+            // TodoListView
+            // 
+            this.TodoListView.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.TodoListView.Location = new System.Drawing.Point(292, 12);
+            this.TodoListView.Name = "TodoListView";
+            this.TodoListView.Size = new System.Drawing.Size(742, 532);
+            this.TodoListView.TabIndex = 9;
             // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1077, 610);
+            this.Controls.Add(this.TodoListView);
             this.Controls.Add(this.TodoListBox);
             this.Controls.Add(this.AddTodoButton);
             this.Font = new System.Drawing.Font("Sylfaen", 12F);
@@ -75,6 +85,7 @@
 
         private System.Windows.Forms.Button AddTodoButton;
         private System.Windows.Forms.ListBox TodoListBox;
+        private System.Windows.Forms.FlowLayoutPanel TodoListView;
     }
 }
 
