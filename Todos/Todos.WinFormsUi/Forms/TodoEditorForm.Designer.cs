@@ -57,6 +57,7 @@
             this.DueDatePicker.Name = "DueDatePicker";
             this.DueDatePicker.Size = new System.Drawing.Size(320, 25);
             this.DueDatePicker.TabIndex = 15;
+            this.DueDatePicker.ValueChanged += new System.EventHandler(this.InputChanged);
             // 
             // StartDateLabel
             // 
@@ -80,6 +81,7 @@
             this.StartDatePicker.Name = "StartDatePicker";
             this.StartDatePicker.Size = new System.Drawing.Size(320, 25);
             this.StartDatePicker.TabIndex = 13;
+            this.StartDatePicker.ValueChanged += new System.EventHandler(this.InputChanged);
             // 
             // DescriptionLabel
             // 
@@ -112,6 +114,7 @@
             this.DescriptionTextBox.Name = "DescriptionTextBox";
             this.DescriptionTextBox.Size = new System.Drawing.Size(320, 124);
             this.DescriptionTextBox.TabIndex = 9;
+            this.DescriptionTextBox.TextChanged += new System.EventHandler(this.InputChanged);
             // 
             // TitleTextBox
             // 
@@ -121,6 +124,7 @@
             this.TitleTextBox.Name = "TitleTextBox";
             this.TitleTextBox.Size = new System.Drawing.Size(320, 25);
             this.TitleTextBox.TabIndex = 10;
+            this.TitleTextBox.TextChanged += new System.EventHandler(this.InputChanged);
             // 
             // AddTodoButton
             // 
@@ -159,6 +163,7 @@
             this.StatusBox.Name = "StatusBox";
             this.StatusBox.Size = new System.Drawing.Size(157, 26);
             this.StatusBox.TabIndex = 17;
+            this.StatusBox.SelectedIndexChanged += new System.EventHandler(this.InputChanged);
             // 
             // PriorityBox
             // 
@@ -169,6 +174,7 @@
             this.PriorityBox.Name = "PriorityBox";
             this.PriorityBox.Size = new System.Drawing.Size(157, 26);
             this.PriorityBox.TabIndex = 18;
+            this.PriorityBox.SelectedIndexChanged += new System.EventHandler(this.InputChanged);
             // 
             // StatusLabel
             // 
@@ -203,6 +209,7 @@
             this.UsersBox.Name = "UsersBox";
             this.UsersBox.Size = new System.Drawing.Size(324, 26);
             this.UsersBox.TabIndex = 21;
+            this.UsersBox.SelectedIndexChanged += new System.EventHandler(this.InputChanged);
             // 
             // AssignToLabel
             // 

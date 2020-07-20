@@ -18,7 +18,10 @@ namespace Todos.WinFormsUi.Forms
     {
         private readonly ITodoCommandService _todoCommandService;
         private readonly IUserQueryService _userQueryService;
+        private readonly IDateTimeProvider _dateTimeProvider;
+
         private List<User> _users;
+        private bool _pendingChanges;
 
         public event EventHandler<Todo> TodoCreated;
 
@@ -28,6 +31,7 @@ namespace Todos.WinFormsUi.Forms
 
             _todoCommandService = ServiceContainer.Get<ITodoCommandService>();
             _userQueryService = ServiceContainer.Get<IUserQueryService>();
+            _dateTimeProvider = ServiceContainer.Get<IDateTimeProvider>();
 
             StatusBox.DataSource = Enum.GetNames(typeof(TodoStatus));
             PriorityBox.DataSource = Enum.GetNames(typeof(TodoPriority));
@@ -40,6 +44,7 @@ namespace Todos.WinFormsUi.Forms
 
             UsersBox.DataSource = _users;
             UsersBox.DisplayMember = nameof(User.Name);
+            _pendingChanges = false;
         }
 
         private async void AddTodoButton_ClickAsync(object sender, EventArgs e)
@@ -62,6 +67,7 @@ namespace Todos.WinFormsUi.Forms
 
             TodoCreated?.Invoke(this, result);
 
+            _pendingChanges = false;
             AddTodoButton.Enabled = true;
         }
 
@@ -72,7 +78,13 @@ namespace Todos.WinFormsUi.Forms
 
         private void TodoEditorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = MessageBox.Show("Do you want to close?", "Closing...", MessageBoxButtons.YesNo) == DialogResult.No;
+            if (_pendingChanges)
+                e.Cancel = MessageBox.Show("Pending changes did not save. Do you want to close?", "Closing...", MessageBoxButtons.YesNo) == DialogResult.No;
+        }
+
+        private void InputChanged(object sender, EventArgs e)
+        {
+            _pendingChanges = true;
         }
     }
 }
