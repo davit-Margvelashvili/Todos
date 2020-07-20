@@ -14,4 +14,10 @@ namespace Todos.Core.Utils
 
         public static string Serialize<T>(this T self) => JsonSerializer.Serialize(self);
     }
+
+    public static class EnumExt
+    {
+        public static TEnum ParseEnum<TEnum>(this string self) =>
+            (TEnum)Enum.Parse(typeof(TEnum), self);
+    }
 }
