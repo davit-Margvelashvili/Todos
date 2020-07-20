@@ -8,5 +8,7 @@ namespace Todos.Core.Abstractions
     {
         DateTime Now { get; }
         DateTime UtcNow { get; }
+
+        DateTime Today { get; }
     }
 }

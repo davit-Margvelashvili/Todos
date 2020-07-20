@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 
@@ -13,11 +12,5 @@ namespace Todos.Core.Utils
         public static T DeserializeAs<T>(this string self) => JsonSerializer.Deserialize<T>(self);
 
         public static string Serialize<T>(this T self) => JsonSerializer.Serialize(self);
-    }
-
-    public static class EnumExt
-    {
-        public static TEnum ParseEnum<TEnum>(this string self) =>
-            (TEnum)Enum.Parse(typeof(TEnum), self);
     }
 }

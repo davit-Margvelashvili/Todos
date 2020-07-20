@@ -44,6 +44,7 @@
             this.UsersBox = new System.Windows.Forms.ComboBox();
             this.AssignToLabel = new System.Windows.Forms.Label();
             this.CancelButton = new System.Windows.Forms.Button();
+            this.titleErrorLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // DueDatePicker
@@ -56,7 +57,7 @@
             this.DueDatePicker.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DueDatePicker.Name = "DueDatePicker";
             this.DueDatePicker.Size = new System.Drawing.Size(320, 25);
-            this.DueDatePicker.TabIndex = 15;
+            this.DueDatePicker.TabIndex = 30;
             this.DueDatePicker.ValueChanged += new System.EventHandler(this.InputChanged);
             // 
             // StartDateLabel
@@ -80,7 +81,7 @@
             this.StartDatePicker.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StartDatePicker.Name = "StartDatePicker";
             this.StartDatePicker.Size = new System.Drawing.Size(320, 25);
-            this.StartDatePicker.TabIndex = 13;
+            this.StartDatePicker.TabIndex = 20;
             this.StartDatePicker.ValueChanged += new System.EventHandler(this.InputChanged);
             // 
             // DescriptionLabel
@@ -113,7 +114,7 @@
             this.DescriptionTextBox.Multiline = true;
             this.DescriptionTextBox.Name = "DescriptionTextBox";
             this.DescriptionTextBox.Size = new System.Drawing.Size(320, 124);
-            this.DescriptionTextBox.TabIndex = 9;
+            this.DescriptionTextBox.TabIndex = 70;
             this.DescriptionTextBox.TextChanged += new System.EventHandler(this.InputChanged);
             // 
             // TitleTextBox
@@ -138,7 +139,7 @@
             this.AddTodoButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AddTodoButton.Name = "AddTodoButton";
             this.AddTodoButton.Size = new System.Drawing.Size(157, 35);
-            this.AddTodoButton.TabIndex = 8;
+            this.AddTodoButton.TabIndex = 80;
             this.AddTodoButton.Text = "Add Todo";
             this.AddTodoButton.UseVisualStyleBackColor = false;
             this.AddTodoButton.Click += new System.EventHandler(this.AddTodoButton_ClickAsync);
@@ -162,7 +163,7 @@
             this.StatusBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StatusBox.Name = "StatusBox";
             this.StatusBox.Size = new System.Drawing.Size(157, 26);
-            this.StatusBox.TabIndex = 17;
+            this.StatusBox.TabIndex = 40;
             this.StatusBox.SelectedIndexChanged += new System.EventHandler(this.InputChanged);
             // 
             // PriorityBox
@@ -173,7 +174,7 @@
             this.PriorityBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PriorityBox.Name = "PriorityBox";
             this.PriorityBox.Size = new System.Drawing.Size(157, 26);
-            this.PriorityBox.TabIndex = 18;
+            this.PriorityBox.TabIndex = 50;
             this.PriorityBox.SelectedIndexChanged += new System.EventHandler(this.InputChanged);
             // 
             // StatusLabel
@@ -208,7 +209,7 @@
             this.UsersBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.UsersBox.Name = "UsersBox";
             this.UsersBox.Size = new System.Drawing.Size(324, 26);
-            this.UsersBox.TabIndex = 21;
+            this.UsersBox.TabIndex = 60;
             this.UsersBox.SelectedIndexChanged += new System.EventHandler(this.InputChanged);
             // 
             // AssignToLabel
@@ -234,16 +235,29 @@
             this.CancelButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(157, 35);
-            this.CancelButton.TabIndex = 8;
+            this.CancelButton.TabIndex = 90;
             this.CancelButton.Text = "Cancel";
             this.CancelButton.UseVisualStyleBackColor = false;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            // 
+            // titleErrorLabel
+            // 
+            this.titleErrorLabel.AutoSize = true;
+            this.titleErrorLabel.Font = new System.Drawing.Font("Sylfaen", 10F);
+            this.titleErrorLabel.ForeColor = System.Drawing.Color.Maroon;
+            this.titleErrorLabel.Location = new System.Drawing.Point(41, 15);
+            this.titleErrorLabel.Name = "titleErrorLabel";
+            this.titleErrorLabel.Size = new System.Drawing.Size(95, 18);
+            this.titleErrorLabel.TabIndex = 91;
+            this.titleErrorLabel.Text = "field is required";
+            this.titleErrorLabel.Visible = false;
             // 
             // TodoEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(345, 496);
+            this.Controls.Add(this.titleErrorLabel);
             this.Controls.Add(this.AssignToLabel);
             this.Controls.Add(this.UsersBox);
             this.Controls.Add(this.PriotiryLabel);
@@ -297,5 +311,6 @@
         private System.Windows.Forms.ComboBox UsersBox;
         private System.Windows.Forms.Label AssignToLabel;
         private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Label titleErrorLabel;
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.Identity.Client;
 using Todos.Core.Abstractions;
 using Todos.Core.Models;
 using Todos.Core.Utils;
+using Color = System.Drawing.Color;
 
 namespace Todos.WinFormsUi.Forms
 {
@@ -37,6 +38,8 @@ namespace Todos.WinFormsUi.Forms
             PriorityBox.DataSource = Enum.GetNames(typeof(TodoPriority));
         }
 
+        #region Event Handlers
+
         private async void TodoEditorForm_LoadAsync(object sender, EventArgs e)
         {
             _users = await _userQueryService.GetAllAsync();
@@ -50,25 +53,32 @@ namespace Todos.WinFormsUi.Forms
         private async void AddTodoButton_ClickAsync(object sender, EventArgs e)
         {
             AddTodoButton.Enabled = false;
-            var newTodo = new Todo
+
+            if (!ValidateInput())
             {
-                Title = TitleTextBox.Text,
-                Description = DescriptionTextBox.Text,
-                StartDate = StartDatePicker.Value,
-                DueDate = DueDatePicker.Value,
-                Status = StatusBox.SelectedItem.ToString().ParseEnum<TodoStatus>(),
-                Priority = PriorityBox.SelectedItem.ToString().ParseEnum<TodoPriority>()
-            };
+                AddTodoButton.Enabled = true;
+                return;
+            }
 
-            if (UsersBox.SelectedItem is User selectedUser && !selectedUser.IsEmpty())
-                newTodo.UserId = selectedUser.Id;
+            await AddTodoAsync();
 
-            var result = await _todoCommandService.AddAsync(newTodo);
-
-            TodoCreated?.Invoke(this, result);
+            //RestoreDefaultValues();
 
             _pendingChanges = false;
             AddTodoButton.Enabled = true;
+            Close();
+        }
+
+        private bool ValidateInput()
+        {
+            if (TitleTextBox.Text.IsNullOrWhiteSpace())
+            {
+                TitleLabel.ForeColor = Color.Maroon;
+                titleErrorLabel.Visible = true;
+                return false;
+            }
+
+            return true;
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -86,5 +96,43 @@ namespace Todos.WinFormsUi.Forms
         {
             _pendingChanges = true;
         }
+
+        #endregion Event Handlers
+
+        #region Helper Methods
+
+        private async Task AddTodoAsync()
+        {
+            var newTodo = new Todo
+            {
+                Title = TitleTextBox.Text,
+                Description = DescriptionTextBox.Text,
+                StartDate = StartDatePicker.Value,
+                DueDate = DueDatePicker.Value,
+                Status = StatusBox.SelectedItem.ToString().ParseEnum<TodoStatus>(),
+                Priority = PriorityBox.SelectedItem.ToString().ParseEnum<TodoPriority>()
+            };
+
+            if (UsersBox.SelectedItem is User selectedUser && !selectedUser.IsEmpty())
+                newTodo.UserId = selectedUser.Id;
+
+            var result = await _todoCommandService.AddAsync(newTodo);
+
+            TodoCreated?.Invoke(this, result);
+        }
+
+        private void RestoreDefaultValues()
+        {
+            TitleTextBox.Clear();
+            DescriptionTextBox.Clear();
+            StartDatePicker.Value = _dateTimeProvider.Today;
+            DueDatePicker.Value = _dateTimeProvider.Today;
+
+            StatusBox.SelectedIndex = 0;
+            PriorityBox.SelectedIndex = 0;
+            UsersBox.SelectedIndex = 0;
+        }
+
+        #endregion Helper Methods
     }
 }
