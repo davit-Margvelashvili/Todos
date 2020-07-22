@@ -42,7 +42,17 @@ namespace Todos.WinFormsUi.Forms
 
         private async void MainForm_LoadAsync(object sender, EventArgs e)
         {
+            var loginForm = new LoginForm();
+            loginForm.Success += OnSuccessfulLogin;
+            if (loginForm.ShowDialog() != DialogResult.OK)
+                Application.Exit();
+
             await LoadDataAsync();
+        }
+
+        private void OnSuccessfulLogin(object sender, User e)
+        {
+            UserNameLabel.Text += e.Name;
         }
 
         private async Task LoadDataAsync()

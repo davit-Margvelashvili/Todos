@@ -37,7 +37,7 @@ namespace Todos.WinFormsUi
         {
             services.AddSingleton<ITodoCommandService, TodoCommandService>()
                 .AddSingleton<ITodoQueryService, TodoQueryService>()
-                .AddSingleton<IUserService, UserCommandService>()
+                .AddSingleton<IUserCommandService, UserCommandCommandService>()
                 .AddSingleton<IUserQueryService, UserQueryService>()
                 .AddSingleton<IDateTimeProvider, DateTimeProvider>()
                 .AddSingleton<MainForm>()

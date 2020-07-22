@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient.Server;
 using Microsoft.EntityFrameworkCore;
@@ -9,19 +10,19 @@ using Todos.Data;
 
 namespace Todos.Services
 {
-    public class UserCommandService : IUserService
+    public class UserCommandCommandService : IUserCommandService
     {
         private readonly TodosDbContext _context;
 
-        public UserCommandService(TodosDbContext context)
+        public UserCommandCommandService(TodosDbContext context)
         {
             _context = context;
         }
 
         public async Task<User> RegisterAsync(User user)
         {
-            var userIsAlreadyRegistered = await _context.Users.AnyAsync(u =>
-                    u.Email.Equals(user.Email, StringComparison.InvariantCultureIgnoreCase));
+            user.Email = user.Email.ToLowerInvariant();
+            var userIsAlreadyRegistered = await _context.Users.AnyAsync(u => u.Email == user.Email);
 
             if (userIsAlreadyRegistered)
                 throw new UserAlreadyRegisteredException(user);
@@ -33,14 +34,17 @@ namespace Todos.Services
             return result.Entity;
         }
 
-        public Task<bool> LoginAsync(User user)
+        public Task<User> LoginAsync(User user)
         {
             return LoginAsync(user.Email, user.Password);
         }
 
-        public Task<bool> LoginAsync(string userName, string password) =>
-            _context.Users.AnyAsync(user =>
-                user.Email.Equals(userName, StringComparison.OrdinalIgnoreCase)
-                && user.Password.Equals(password, StringComparison.InvariantCulture));
+        public Task<User> LoginAsync(string userName, string password)
+        {
+            userName = userName.ToLowerInvariant();
+            return _context.Users.FirstOrDefaultAsync(user =>
+                user.Email == userName
+                && user.Password == password);
+        }
     }
 }

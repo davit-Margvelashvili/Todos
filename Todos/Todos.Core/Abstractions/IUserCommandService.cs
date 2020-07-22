@@ -3,12 +3,12 @@ using Todos.Core.Models;
 
 namespace Todos.Core.Abstractions
 {
-    public interface IUserService
+    public interface IUserCommandService
     {
         Task<User> RegisterAsync(User user);
 
-        Task<bool> LoginAsync(User user);
+        Task<User> LoginAsync(User user);
 
-        Task<bool> LoginAsync(string userName, string password);
+        Task<User> LoginAsync(string userName, string password);
     }
 }
