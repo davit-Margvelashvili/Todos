@@ -9,11 +9,11 @@ using Todos.Data;
 
 namespace Todos.Services
 {
-    public class UserService : IUserService
+    public class UserCommandService : IUserService
     {
         private readonly TodosDbContext _context;
 
-        public UserService(TodosDbContext context)
+        public UserCommandService(TodosDbContext context)
         {
             _context = context;
         }

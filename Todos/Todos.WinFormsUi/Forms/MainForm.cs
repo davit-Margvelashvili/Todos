@@ -12,14 +12,16 @@ namespace Todos.WinFormsUi.Forms
     public partial class MainForm : Form
     {
         private readonly ITodoQueryService _todoQueryService;
+        private readonly ITodoCommandService _todoCommandService;
 
         private List<Todo> _todos;
 
-        public MainForm(ITodoQueryService todoQueryService)
+        public MainForm(ITodoQueryService todoQueryService, ITodoCommandService todoCommandService)
         {
             InitializeComponent();
 
             _todoQueryService = todoQueryService;
+            _todoCommandService = todoCommandService;
         }
 
         private void AddTodoButton_Click(object sender, EventArgs e)
@@ -51,12 +53,14 @@ namespace Todos.WinFormsUi.Forms
 
         private void PopulateTodos()
         {
-            TodoListBox.Items.Clear();
-            TodoListBox.Items.AddRange(_todos.Select(todo => $"{todo.Title} {todo.Status}").ToArray());
-
-            var todoItemControls = _todos.Select(todo => new TodoItemControl(todo)).ToArray();
+            var todoItemControls = _todos.Select(todo => new TodoItemControl(todo, OnTodoUpdate)).ToArray();
 
             TodoListView.Controls.AddRange(todoItemControls);
+        }
+
+        private async void OnTodoUpdate(object sender, Todo todo)
+        {
+            await _todoCommandService.EditAsync(todo);
         }
     }
 }

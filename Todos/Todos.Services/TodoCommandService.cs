@@ -23,10 +23,11 @@ namespace Todos.Services
             return result.Entity;
         }
 
-        public Task<Todo> EditAsync(Todo todo)
+        public async Task<Todo> EditAsync(Todo todo)
         {
             var result = _context.Todos.Update(todo);
-            return Task.FromResult(result.Entity);
+            await _context.SaveChangesAsync();
+            return result.Entity;
         }
 
         public async Task<Todo> ChangeDueDateAsync(int todoId, DateTime dueDate)

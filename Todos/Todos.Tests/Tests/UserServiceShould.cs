@@ -109,12 +109,12 @@ namespace Todos.Tests.Tests
             Assert.False(loggedIn);
         }
 
-        private static UserService CreateUserService(string databaseName)
+        private static UserCommandService CreateUserService(string databaseName)
         {
             var options = new DbContextOptionsBuilder().UseInMemoryDatabase(databaseName)
                 .Options;
             var dbContext = new TodosDbContext(options);
-            var userService = new UserService(dbContext);
+            var userService = new UserCommandService(dbContext);
             return userService;
         }
     }

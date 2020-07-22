@@ -193,6 +193,7 @@
             this.SaveChangesButton.TabIndex = 9;
             this.SaveChangesButton.Text = "+";
             this.SaveChangesButton.UseVisualStyleBackColor = true;
+            this.SaveChangesButton.Visible = false;
             this.SaveChangesButton.Click += new System.EventHandler(this.SaveChangesButton_Click);
             // 
             // DiscardChangesButton
@@ -203,6 +204,7 @@
             this.DiscardChangesButton.TabIndex = 10;
             this.DiscardChangesButton.Text = "-";
             this.DiscardChangesButton.UseVisualStyleBackColor = true;
+            this.DiscardChangesButton.Visible = false;
             this.DiscardChangesButton.Click += new System.EventHandler(this.DiscardChangesButton_Click);
             // 
             // TodoItemControl

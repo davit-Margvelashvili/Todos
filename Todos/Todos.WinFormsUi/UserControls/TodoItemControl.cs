@@ -16,6 +16,19 @@ namespace Todos.WinFormsUi.UserControls
 {
     public partial class TodoItemControl : UserControl
     {
+        private bool _pendingChanges = false;
+
+        public bool PendingChanges
+        {
+            get => _pendingChanges;
+            set
+            {
+                _pendingChanges = value;
+                SaveChangesButton.Visible = _pendingChanges;
+                DiscardChangesButton.Visible = _pendingChanges;
+            }
+        }
+
         private readonly Todo _todo;
         private readonly Todo _originalTodo;
         private readonly string[] _priorityCollection;
@@ -23,7 +36,7 @@ namespace Todos.WinFormsUi.UserControls
 
         public event EventHandler<Todo> TodoUpdated;
 
-        public TodoItemControl(Todo todo)
+        public TodoItemControl(Todo todo, EventHandler<Todo> todoUpdateCallback = null)
         {
             _todo = todo;
             _originalTodo = todo.DeepCopy();
@@ -36,7 +49,12 @@ namespace Todos.WinFormsUi.UserControls
             StatusBox.DataSource = _statusCollection;
             PriorityBox.DataSource = _priorityCollection;
 
-            PopulateData(_todo);
+            PopulateData(_originalTodo);
+
+            if (todoUpdateCallback != null)
+                TodoUpdated += todoUpdateCallback;
+
+            PendingChanges = false;
         }
 
         private void PopulateData(Todo todo)
@@ -52,42 +70,52 @@ namespace Todos.WinFormsUi.UserControls
         private void TitleTextBox_TextChanged(object sender, EventArgs e)
         {
             _todo.Title = TitleTextBox.Text;
+            PendingChanges = true;
         }
 
         private void DescriptionTextBox_TextChanged(object sender, EventArgs e)
         {
             _todo.Description = DescriptionTextBox.Text;
+            PendingChanges = true;
         }
 
         private void UserBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (UserBox.SelectedItem is User selectedUser)
+            {
                 _todo.UserId = selectedUser.Id;
+                PendingChanges = true;
+            }
         }
 
         private void StatusBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             _todo.Status = StatusBox.SelectedItem.ToString().ParseEnum<TodoStatus>();
+            PendingChanges = true;
         }
 
         private void PriorityBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             _todo.Priority = PriorityBox.SelectedItem.ToString().ParseEnum<TodoPriority>();
+            PendingChanges = true;
         }
 
         private void StartDatePicker_ValueChanged(object sender, EventArgs e)
         {
             _todo.StartDate = StartDatePicker.Value;
+            PendingChanges = true;
         }
 
         private void DueDatePicker_ValueChanged(object sender, EventArgs e)
         {
             _todo.DueDate = DueDatePicker.Value;
+            PendingChanges = true;
         }
 
         private void SaveChangesButton_Click(object sender, EventArgs e)
         {
             TodoUpdated?.Invoke(this, _todo);
+            PendingChanges = false;
         }
 
         private void DiscardChangesButton_Click(object sender, EventArgs e)
@@ -101,6 +129,7 @@ namespace Todos.WinFormsUi.UserControls
             _todo.StartDate = _originalTodo.StartDate;
             _todo.DueDate = _originalTodo.DueDate;
             _todo.UserId = _originalTodo.UserId;
+            PendingChanges = false;
         }
     }
 }
