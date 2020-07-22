@@ -41,8 +41,8 @@
             this.StatusBox = new System.Windows.Forms.ComboBox();
             this.PriorityBox = new System.Windows.Forms.ComboBox();
             this.AssignedToLabel = new System.Windows.Forms.Label();
-            this.EditButton = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.EditButton)).BeginInit();
+            this.SaveChangesButton = new System.Windows.Forms.Button();
+            this.DiscardChangesButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // TitleTextBox
@@ -51,11 +51,12 @@
             this.TitleTextBox.Font = new System.Drawing.Font("Sylfaen", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TitleTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.TitleTextBox.Location = new System.Drawing.Point(10, 6);
-            this.TitleTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TitleTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.TitleTextBox.Name = "TitleTextBox";
             this.TitleTextBox.Size = new System.Drawing.Size(335, 26);
             this.TitleTextBox.TabIndex = 0;
             this.TitleTextBox.Text = "Lorem ipsum";
+            this.TitleTextBox.TextChanged += new System.EventHandler(this.TitleTextBox_TextChanged);
             // 
             // DescriptionTextBox
             // 
@@ -69,9 +70,11 @@
             this.DescriptionTextBox.Size = new System.Drawing.Size(335, 73);
             this.DescriptionTextBox.TabIndex = 0;
             this.DescriptionTextBox.Text = resources.GetString("DescriptionTextBox.Text");
+            this.DescriptionTextBox.TextChanged += new System.EventHandler(this.DescriptionTextBox_TextChanged);
             // 
             // UserBox
             // 
+            this.UserBox.BackColor = System.Drawing.SystemColors.Control;
             this.UserBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.UserBox.Font = new System.Drawing.Font("Sylfaen", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UserBox.FormattingEnabled = true;
@@ -79,33 +82,36 @@
             this.UserBox.Name = "UserBox";
             this.UserBox.Size = new System.Drawing.Size(260, 22);
             this.UserBox.TabIndex = 1;
+            this.UserBox.SelectedIndexChanged += new System.EventHandler(this.UserBox_SelectedIndexChanged);
             // 
             // StartDatePicker
             // 
             this.StartDatePicker.CustomFormat = "dd/MM/yyyy";
-            this.StartDatePicker.Font = new System.Drawing.Font("Sylfaen", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StartDatePicker.Font = new System.Drawing.Font("Sylfaen", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StartDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.StartDatePicker.Location = new System.Drawing.Point(567, 42);
+            this.StartDatePicker.Location = new System.Drawing.Point(580, 42);
             this.StartDatePicker.Name = "StartDatePicker";
-            this.StartDatePicker.Size = new System.Drawing.Size(160, 22);
+            this.StartDatePicker.Size = new System.Drawing.Size(138, 23);
             this.StartDatePicker.TabIndex = 2;
+            this.StartDatePicker.ValueChanged += new System.EventHandler(this.StartDatePicker_ValueChanged);
             // 
             // DueDatePicker
             // 
             this.DueDatePicker.CustomFormat = "dd/MM/yyyy";
-            this.DueDatePicker.Font = new System.Drawing.Font("Sylfaen", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DueDatePicker.Font = new System.Drawing.Font("Sylfaen", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DueDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.DueDatePicker.Location = new System.Drawing.Point(567, 75);
+            this.DueDatePicker.Location = new System.Drawing.Point(580, 75);
             this.DueDatePicker.Name = "DueDatePicker";
-            this.DueDatePicker.Size = new System.Drawing.Size(160, 22);
+            this.DueDatePicker.Size = new System.Drawing.Size(138, 23);
             this.DueDatePicker.TabIndex = 3;
+            this.DueDatePicker.ValueChanged += new System.EventHandler(this.DueDatePicker_ValueChanged);
             // 
             // StartDateLabel
             // 
             this.StartDateLabel.AutoSize = true;
             this.StartDateLabel.Font = new System.Drawing.Font("Sylfaen", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StartDateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(69)))), ((int)(((byte)(69)))));
-            this.StartDateLabel.Location = new System.Drawing.Point(531, 44);
+            this.StartDateLabel.Location = new System.Drawing.Point(539, 44);
             this.StartDateLabel.Name = "StartDateLabel";
             this.StartDateLabel.Size = new System.Drawing.Size(34, 18);
             this.StartDateLabel.TabIndex = 4;
@@ -116,7 +122,7 @@
             this.DueDateLabel.AutoSize = true;
             this.DueDateLabel.Font = new System.Drawing.Font("Sylfaen", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DueDateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(69)))), ((int)(((byte)(69)))));
-            this.DueDateLabel.Location = new System.Drawing.Point(531, 77);
+            this.DueDateLabel.Location = new System.Drawing.Point(539, 77);
             this.DueDateLabel.Name = "DueDateLabel";
             this.DueDateLabel.Size = new System.Drawing.Size(31, 18);
             this.DueDateLabel.TabIndex = 4;
@@ -146,23 +152,27 @@
             // 
             // StatusBox
             // 
+            this.StatusBox.BackColor = System.Drawing.SystemColors.Control;
             this.StatusBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.StatusBox.Font = new System.Drawing.Font("Sylfaen", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StatusBox.Font = new System.Drawing.Font("Sylfaen", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StatusBox.FormattingEnabled = true;
             this.StatusBox.Location = new System.Drawing.Point(404, 42);
             this.StatusBox.Name = "StatusBox";
-            this.StatusBox.Size = new System.Drawing.Size(121, 22);
+            this.StatusBox.Size = new System.Drawing.Size(121, 24);
             this.StatusBox.TabIndex = 7;
+            this.StatusBox.SelectedIndexChanged += new System.EventHandler(this.StatusBox_SelectedIndexChanged);
             // 
             // PriorityBox
             // 
+            this.PriorityBox.BackColor = System.Drawing.SystemColors.Control;
             this.PriorityBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.PriorityBox.Font = new System.Drawing.Font("Sylfaen", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PriorityBox.Font = new System.Drawing.Font("Sylfaen", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PriorityBox.FormattingEnabled = true;
             this.PriorityBox.Location = new System.Drawing.Point(404, 75);
             this.PriorityBox.Name = "PriorityBox";
-            this.PriorityBox.Size = new System.Drawing.Size(121, 22);
+            this.PriorityBox.Size = new System.Drawing.Size(121, 24);
             this.PriorityBox.TabIndex = 7;
+            this.PriorityBox.SelectedIndexChanged += new System.EventHandler(this.PriorityBox_SelectedIndexChanged);
             // 
             // AssignedToLabel
             // 
@@ -175,20 +185,32 @@
             this.AssignedToLabel.TabIndex = 8;
             this.AssignedToLabel.Text = "Assigned to";
             // 
-            // EditButton
+            // SaveChangesButton
             // 
-            this.EditButton.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.EditButton.Location = new System.Drawing.Point(711, 6);
-            this.EditButton.Name = "EditButton";
-            this.EditButton.Size = new System.Drawing.Size(26, 22);
-            this.EditButton.TabIndex = 9;
-            this.EditButton.TabStop = false;
+            this.SaveChangesButton.Location = new System.Drawing.Point(702, 4);
+            this.SaveChangesButton.Name = "SaveChangesButton";
+            this.SaveChangesButton.Size = new System.Drawing.Size(16, 23);
+            this.SaveChangesButton.TabIndex = 9;
+            this.SaveChangesButton.Text = "+";
+            this.SaveChangesButton.UseVisualStyleBackColor = true;
+            this.SaveChangesButton.Click += new System.EventHandler(this.SaveChangesButton_Click);
+            // 
+            // DiscardChangesButton
+            // 
+            this.DiscardChangesButton.Location = new System.Drawing.Point(721, 5);
+            this.DiscardChangesButton.Name = "DiscardChangesButton";
+            this.DiscardChangesButton.Size = new System.Drawing.Size(16, 23);
+            this.DiscardChangesButton.TabIndex = 10;
+            this.DiscardChangesButton.Text = "-";
+            this.DiscardChangesButton.UseVisualStyleBackColor = true;
+            this.DiscardChangesButton.Click += new System.EventHandler(this.DiscardChangesButton_Click);
             // 
             // TodoItemControl
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.EditButton);
+            this.Controls.Add(this.DiscardChangesButton);
+            this.Controls.Add(this.SaveChangesButton);
             this.Controls.Add(this.AssignedToLabel);
             this.Controls.Add(this.PriorityBox);
             this.Controls.Add(this.StatusBox);
@@ -202,10 +224,9 @@
             this.Controls.Add(this.DescriptionTextBox);
             this.Controls.Add(this.TitleTextBox);
             this.Font = new System.Drawing.Font("Sylfaen", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "TodoItemControl";
             this.Size = new System.Drawing.Size(740, 118);
-            ((System.ComponentModel.ISupportInitialize)(this.EditButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -225,6 +246,7 @@
         private System.Windows.Forms.ComboBox StatusBox;
         private System.Windows.Forms.ComboBox PriorityBox;
         private System.Windows.Forms.Label AssignedToLabel;
-        private System.Windows.Forms.PictureBox EditButton;
+        private System.Windows.Forms.Button SaveChangesButton;
+        private System.Windows.Forms.Button DiscardChangesButton;
     }
 }
