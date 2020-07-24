@@ -75,10 +75,10 @@ namespace Todos.Tests.Tests
             Assert.Equal(1, user.Id);
 
             var loggedIn = await userService.LoginAsync(user);
-            Assert.True(loggedIn);
+            Assert.NotNull(loggedIn);
 
             loggedIn = await userService.LoginAsync(user.Email, user.Password);
-            Assert.True(loggedIn);
+            Assert.NotNull(loggedIn);
         }
 
         [Fact]
@@ -103,10 +103,10 @@ namespace Todos.Tests.Tests
                 Email = wrongUserName,
                 Password = wrongPassword
             });
-            Assert.False(loggedIn);
+            Assert.Null(loggedIn);
 
             loggedIn = await userService.LoginAsync(wrongUserName, wrongPassword);
-            Assert.False(loggedIn);
+            Assert.Null(loggedIn);
         }
 
         private static UserCommandCommandService CreateUserService(string databaseName)
