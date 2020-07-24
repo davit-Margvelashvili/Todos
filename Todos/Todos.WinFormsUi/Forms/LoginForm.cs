@@ -28,18 +28,27 @@ namespace Todos.WinFormsUi.Forms
 
         private async void LoginButton_ClickAsync(object sender, EventArgs e)
         {
-            LoginButton.Enabled = false;
-            var userName = UserNameTextBox.Text;
-            var password = PasswordTextBox.Text;
+            await LoginAsync();
+        }
 
-            // TODO უკეთესი ვალიდაცია დაამატეთ
-            if (userName.IsNullOrWhiteSpace() || password.IsNullOrWhiteSpace())
+        private async Task LoginAsync()
+        {
+            LoginButton.Enabled = false;
+
+            if (!ValidateInput())
             {
                 LoginButton.Enabled = true;
                 return;
             }
 
-            var user = await _userService.LoginAsync(UserNameTextBox.Text, PasswordTextBox.Text);
+            await LoginAsync(UserNameTextBox.Text, PasswordTextBox.Text);
+
+            LoginButton.Enabled = true;
+        }
+
+        private async Task LoginAsync(string userName, string password)
+        {
+            var user = await _userService.LoginAsync(userName, password);
             if (user != null)
             {
                 Success?.Invoke(this, user);
@@ -50,7 +59,22 @@ namespace Todos.WinFormsUi.Forms
             {
                 ErrorLabel.Visible = true;
             }
-            LoginButton.Enabled = true;
+        }
+
+        private bool ValidateInput() =>
+            UserNameTextBox.Validate(UserNameError)
+            & PasswordTextBox.Validate(PasswordError);
+
+        private void RegisterButton_Click(object sender, EventArgs e)
+        {
+            var registrationForm = new RegistrationForm();
+            registrationForm.Success += OnSuccessfulRegistrationAsync;
+            registrationForm.ShowDialog();
+        }
+
+        private async void OnSuccessfulRegistrationAsync(object sender, User e)
+        {
+            await LoginAsync(e.Email, e.Password);
         }
     }
 }

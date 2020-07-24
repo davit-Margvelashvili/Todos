@@ -29,36 +29,29 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.UserNameTextBox = new System.Windows.Forms.TextBox();
             this.PasswordTextBox = new System.Windows.Forms.TextBox();
             this.LoginButton = new System.Windows.Forms.Button();
             this.UserNameLabel = new System.Windows.Forms.Label();
             this.PasswordLabel = new System.Windows.Forms.Label();
             this.ErrorLabel = new System.Windows.Forms.Label();
+            this.RegisterButton = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.UserNameError = new System.Windows.Forms.Label();
+            this.PasswordError = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Todos.WinFormsUi.Properties.Resources.login;
-            this.pictureBox1.Location = new System.Drawing.Point(201, 28);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(133, 121);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
             // UserNameTextBox
             // 
-            this.UserNameTextBox.Location = new System.Drawing.Point(12, 280);
+            this.UserNameTextBox.Location = new System.Drawing.Point(12, 256);
             this.UserNameTextBox.Name = "UserNameTextBox";
             this.UserNameTextBox.Size = new System.Drawing.Size(495, 29);
             this.UserNameTextBox.TabIndex = 10;
             // 
             // PasswordTextBox
             // 
-            this.PasswordTextBox.Location = new System.Drawing.Point(12, 340);
+            this.PasswordTextBox.Location = new System.Drawing.Point(12, 316);
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.Size = new System.Drawing.Size(495, 29);
             this.PasswordTextBox.TabIndex = 20;
@@ -83,7 +76,7 @@
             // 
             this.UserNameLabel.AutoSize = true;
             this.UserNameLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.UserNameLabel.Location = new System.Drawing.Point(12, 255);
+            this.UserNameLabel.Location = new System.Drawing.Point(12, 231);
             this.UserNameLabel.Name = "UserNameLabel";
             this.UserNameLabel.Size = new System.Drawing.Size(49, 22);
             this.UserNameLabel.TabIndex = 3;
@@ -93,7 +86,7 @@
             // 
             this.PasswordLabel.AutoSize = true;
             this.PasswordLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.PasswordLabel.Location = new System.Drawing.Point(12, 315);
+            this.PasswordLabel.Location = new System.Drawing.Point(12, 291);
             this.PasswordLabel.Name = "PasswordLabel";
             this.PasswordLabel.Size = new System.Drawing.Size(72, 22);
             this.PasswordLabel.TabIndex = 3;
@@ -110,10 +103,57 @@
             this.ErrorLabel.Text = "Email or Password is incorrect";
             this.ErrorLabel.Visible = false;
             // 
+            // RegisterButton
+            // 
+            this.RegisterButton.AutoSize = true;
+            this.RegisterButton.Font = new System.Drawing.Font("Sylfaen", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RegisterButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.RegisterButton.Location = new System.Drawing.Point(227, 350);
+            this.RegisterButton.Name = "RegisterButton";
+            this.RegisterButton.Size = new System.Drawing.Size(64, 22);
+            this.RegisterButton.TabIndex = 31;
+            this.RegisterButton.Text = "Register";
+            this.RegisterButton.Click += new System.EventHandler(this.RegisterButton_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Todos.WinFormsUi.Properties.Resources.login;
+            this.pictureBox1.Location = new System.Drawing.Point(201, 28);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(133, 121);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // UserNameError
+            // 
+            this.UserNameError.AutoSize = true;
+            this.UserNameError.ForeColor = System.Drawing.Color.Maroon;
+            this.UserNameError.Location = new System.Drawing.Point(58, 231);
+            this.UserNameError.Name = "UserNameError";
+            this.UserNameError.Size = new System.Drawing.Size(80, 22);
+            this.UserNameError.TabIndex = 35;
+            this.UserNameError.Text = "is required";
+            this.UserNameError.Visible = false;
+            // 
+            // PasswordError
+            // 
+            this.PasswordError.AutoSize = true;
+            this.PasswordError.ForeColor = System.Drawing.Color.Maroon;
+            this.PasswordError.Location = new System.Drawing.Point(83, 291);
+            this.PasswordError.Name = "PasswordError";
+            this.PasswordError.Size = new System.Drawing.Size(80, 22);
+            this.PasswordError.TabIndex = 36;
+            this.PasswordError.Text = "is required";
+            this.PasswordError.Visible = false;
+            // 
             // LoginForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(519, 429);
+            this.Controls.Add(this.PasswordError);
+            this.Controls.Add(this.UserNameError);
+            this.Controls.Add(this.RegisterButton);
             this.Controls.Add(this.ErrorLabel);
             this.Controls.Add(this.PasswordLabel);
             this.Controls.Add(this.UserNameLabel);
@@ -146,5 +186,8 @@
         private System.Windows.Forms.Label UserNameLabel;
         private System.Windows.Forms.Label PasswordLabel;
         private System.Windows.Forms.Label ErrorLabel;
+        private System.Windows.Forms.Label RegisterButton;
+        private System.Windows.Forms.Label UserNameError;
+        private System.Windows.Forms.Label PasswordError;
     }
 }
