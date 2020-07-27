@@ -66,7 +66,7 @@ namespace Todos.WinFormsUi.UserControls
             UserBox.DisplayMember = nameof(User.Name);
             UserBox.DataSource = _user;
 
-            UserBox.DataBindings.Add(nameof(ComboBox.SelectedItem), _todo, nameof(Todo.AssignedTo), true, DataSourceUpdateMode.OnPropertyChanged);
+            UserBox.DataBindings.Add(nameof(ComboBox.SelectedItem), _todo, nameof(Todo.AssignedTo));
         }
 
         private void ValueChanged(object sender, EventArgs e)
