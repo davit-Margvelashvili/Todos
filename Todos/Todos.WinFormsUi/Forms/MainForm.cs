@@ -59,13 +59,31 @@ namespace Todos.WinFormsUi.Forms
         {
             _todos = await _todoQueryService.GetAllAsync();
 
-            var todoSource = new BindingSource();
+            var todoBindingSource = new BindingSource { DataSource = _todos };
 
-            todoSource.DataSource = _todos;
-            todoGrid.DataSource = todoSource;
+            TodoGrid.AutoGenerateColumns = false;
+            TodoGrid.AutoSize = true;
+            TodoGrid.DataSource = todoBindingSource;
+            TodoGrid.CellValueChanged += TodoGrid_CellValueChanged;
+
+            TodoGrid.Columns.Add(CreateComboBoxWithEnums<TodoStatus>("Status"));
+            TodoGrid.Columns.Add(CreateComboBoxWithEnums<TodoPriority>("Priority"));
 
             await PopulateTodosAsync();
         }
+
+        private void TodoGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            var td = TodoGrid.Rows[e.RowIndex].DataBoundItem as Todo;
+        }
+
+        private DataGridViewComboBoxColumn CreateComboBoxWithEnums<TEnum>(string propertyName) =>
+            new DataGridViewComboBoxColumn
+            {
+                DataSource = Enum.GetValues(typeof(TEnum)),
+                DataPropertyName = propertyName,
+                Name = propertyName
+            };
 
         private async Task PopulateTodosAsync()
         {
