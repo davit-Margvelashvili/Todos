@@ -56,7 +56,7 @@
             this.TitleTextBox.Size = new System.Drawing.Size(335, 26);
             this.TitleTextBox.TabIndex = 0;
             this.TitleTextBox.Text = "Lorem ipsum";
-            this.TitleTextBox.TextChanged += new System.EventHandler(this.TitleTextBox_TextChanged);
+            this.TitleTextBox.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // DescriptionTextBox
             // 
@@ -70,7 +70,7 @@
             this.DescriptionTextBox.Size = new System.Drawing.Size(335, 73);
             this.DescriptionTextBox.TabIndex = 0;
             this.DescriptionTextBox.Text = resources.GetString("DescriptionTextBox.Text");
-            this.DescriptionTextBox.TextChanged += new System.EventHandler(this.DescriptionTextBox_TextChanged);
+            this.DescriptionTextBox.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // UserBox
             // 
@@ -82,7 +82,7 @@
             this.UserBox.Name = "UserBox";
             this.UserBox.Size = new System.Drawing.Size(260, 22);
             this.UserBox.TabIndex = 1;
-            this.UserBox.SelectedIndexChanged += new System.EventHandler(this.UserBox_SelectedIndexChanged);
+            this.UserBox.SelectedValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // StartDatePicker
             // 
@@ -93,7 +93,7 @@
             this.StartDatePicker.Name = "StartDatePicker";
             this.StartDatePicker.Size = new System.Drawing.Size(138, 23);
             this.StartDatePicker.TabIndex = 2;
-            this.StartDatePicker.ValueChanged += new System.EventHandler(this.StartDatePicker_ValueChanged);
+            this.StartDatePicker.ValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // DueDatePicker
             // 
@@ -104,7 +104,7 @@
             this.DueDatePicker.Name = "DueDatePicker";
             this.DueDatePicker.Size = new System.Drawing.Size(138, 23);
             this.DueDatePicker.TabIndex = 3;
-            this.DueDatePicker.ValueChanged += new System.EventHandler(this.DueDatePicker_ValueChanged);
+            this.DueDatePicker.ValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // StartDateLabel
             // 
@@ -160,7 +160,7 @@
             this.StatusBox.Name = "StatusBox";
             this.StatusBox.Size = new System.Drawing.Size(121, 24);
             this.StatusBox.TabIndex = 7;
-            this.StatusBox.SelectedIndexChanged += new System.EventHandler(this.StatusBox_SelectedIndexChanged);
+            this.StatusBox.SelectedValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // PriorityBox
             // 
@@ -172,7 +172,7 @@
             this.PriorityBox.Name = "PriorityBox";
             this.PriorityBox.Size = new System.Drawing.Size(121, 24);
             this.PriorityBox.TabIndex = 7;
-            this.PriorityBox.SelectedIndexChanged += new System.EventHandler(this.PriorityBox_SelectedIndexChanged);
+            this.PriorityBox.SelectedValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // AssignedToLabel
             // 
@@ -229,6 +229,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "TodoItemControl";
             this.Size = new System.Drawing.Size(740, 118);
+            this.Load += new System.EventHandler(this.TodoItemControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

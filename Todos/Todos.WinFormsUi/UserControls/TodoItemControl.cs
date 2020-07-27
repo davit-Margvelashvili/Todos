@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Todos.Core.Models;
 using Todos.Core.Utils;
@@ -30,98 +29,65 @@ namespace Todos.WinFormsUi.UserControls
         }
 
         private readonly Todo _todo;
+        private readonly List<User> _user;
         private readonly Todo _originalTodo;
-        private readonly string[] _priorityCollection;
-        private readonly string[] _statusCollection;
 
         public event EventHandler<Todo> TodoUpdated;
 
-        public TodoItemControl(Todo todo, EventHandler<Todo> todoUpdateCallback = null)
+        public TodoItemControl(Todo todo, List<User> user, EventHandler<Todo> todoUpdateCallback = null)
         {
             _todo = todo;
+
+            _user = user;
             _originalTodo = todo.DeepCopy();
 
             InitializeComponent();
 
-            _statusCollection = Enum.GetNames(typeof(TodoStatus));
-            _priorityCollection = Enum.GetNames(typeof(TodoPriority));
-
-            StatusBox.DataSource = _statusCollection;
-            PriorityBox.DataSource = _priorityCollection;
-
-            PopulateData(_originalTodo);
+            BindData();
 
             if (todoUpdateCallback != null)
                 TodoUpdated += todoUpdateCallback;
-
-            PendingChanges = false;
         }
 
-        private void PopulateData(Todo todo)
+        private void BindData()
         {
-            TitleTextBox.Text = todo.Title;
-            DescriptionTextBox.Text = todo.Description;
-            StartDatePicker.Value = todo.StartDate;
-            DueDatePicker.Value = todo.DueDate;
-            StatusBox.SelectedIndex = _statusCollection.IndexOf(todo.Status.ToString());
-            PriorityBox.SelectedIndex = _priorityCollection.IndexOf(todo.Priority.ToString());
+            TitleTextBox.DataBindings.Add("Text", _todo, nameof(Todo.Title));
+            DescriptionTextBox.DataBindings.Add("Text", _todo, nameof(Todo.Description));
+
+            StartDatePicker.DataBindings.Add("Value", _todo, nameof(Todo.StartDate));
+            DueDatePicker.DataBindings.Add("Value", _todo, nameof(Todo.DueDate));
+
+            StatusBox.DataBindings.Add(nameof(ComboBox.SelectedItem), _todo, nameof(_todo.Status));
+            StatusBox.DataSource = Enum.GetValues(typeof(TodoStatus));
+
+            PriorityBox.DataBindings.Add(nameof(ComboBox.SelectedItem), _todo, nameof(_todo.Priority));
+            PriorityBox.DataSource = Enum.GetValues(typeof(TodoPriority));
+
+            UserBox.DisplayMember = nameof(User.Name);
+            UserBox.DataSource = _user;
+
+            UserBox.DataBindings.Add(nameof(ComboBox.SelectedItem), _todo, nameof(Todo.AssignedTo), true, DataSourceUpdateMode.OnPropertyChanged);
         }
 
-        private void TitleTextBox_TextChanged(object sender, EventArgs e)
+        private void ValueChanged(object sender, EventArgs e)
         {
-            _todo.Title = TitleTextBox.Text;
-            PendingChanges = true;
-        }
-
-        private void DescriptionTextBox_TextChanged(object sender, EventArgs e)
-        {
-            _todo.Description = DescriptionTextBox.Text;
-            PendingChanges = true;
-        }
-
-        private void UserBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (UserBox.SelectedItem is User selectedUser)
-            {
-                _todo.UserId = selectedUser.Id;
-                PendingChanges = true;
-            }
-        }
-
-        private void StatusBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _todo.Status = StatusBox.SelectedItem.ToString().ParseEnum<TodoStatus>();
-            PendingChanges = true;
-        }
-
-        private void PriorityBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _todo.Priority = PriorityBox.SelectedItem.ToString().ParseEnum<TodoPriority>();
-            PendingChanges = true;
-        }
-
-        private void StartDatePicker_ValueChanged(object sender, EventArgs e)
-        {
-            _todo.StartDate = StartDatePicker.Value;
-            PendingChanges = true;
-        }
-
-        private void DueDatePicker_ValueChanged(object sender, EventArgs e)
-        {
-            _todo.DueDate = DueDatePicker.Value;
             PendingChanges = true;
         }
 
         private void SaveChangesButton_Click(object sender, EventArgs e)
         {
+            if (_todo.AssignedTo == User.Empty)
+            {
+                _todo.AssignedTo = null;
+                _todo.UserId = null;
+            }
             TodoUpdated?.Invoke(this, _todo);
+
             PendingChanges = false;
         }
 
         private void DiscardChangesButton_Click(object sender, EventArgs e)
         {
-            PopulateData(_originalTodo);
-
             _todo.Title = _originalTodo.Title;
             _todo.Description = _originalTodo.Description;
             _todo.Status = _originalTodo.Status;
@@ -129,6 +95,12 @@ namespace Todos.WinFormsUi.UserControls
             _todo.StartDate = _originalTodo.StartDate;
             _todo.DueDate = _originalTodo.DueDate;
             _todo.UserId = _originalTodo.UserId;
+            _todo.AssignedTo = _originalTodo.AssignedTo;
+            PendingChanges = false;
+        }
+
+        private void TodoItemControl_Load(object sender, EventArgs e)
+        {
             PendingChanges = false;
         }
     }

@@ -34,7 +34,7 @@ namespace Todos.WinFormsUi.Forms
         private void TodoEditorForm_TodoCreated(object sender, Todo newTodo)
         {
             _todos.Add(newTodo);
-            PopulateTodos();
+            PopulateTodosAsync();
 
             if (sender is TodoEditorForm editorForm)
                 editorForm.TodoCreated -= TodoEditorForm_TodoCreated;
@@ -42,10 +42,10 @@ namespace Todos.WinFormsUi.Forms
 
         private async void MainForm_LoadAsync(object sender, EventArgs e)
         {
-            var loginForm = new LoginForm();
-            loginForm.Success += OnSuccessfulLogin;
-            if (loginForm.ShowDialog() != DialogResult.OK)
-                Application.Exit();
+            //var loginForm = new LoginForm();
+            //loginForm.Success += OnSuccessfulLogin;
+            //if (loginForm.ShowDialog() != DialogResult.OK)
+            //    Application.Exit();
 
             await LoadDataAsync();
         }
@@ -58,17 +58,19 @@ namespace Todos.WinFormsUi.Forms
         private async Task LoadDataAsync()
         {
             _todos = await _todoQueryService.GetAllAsync();
-            PopulateTodos();
+            await PopulateTodosAsync();
         }
 
-        private void PopulateTodos()
+        private async Task PopulateTodosAsync()
         {
-            var todoItemControls = _todos.Select(todo => new TodoItemControl(todo, OnTodoUpdate)).ToArray();
+            var users = await ServiceContainer.Get<IUserQueryService>().GetAllAsync();
+            users.Insert(0, User.Empty);
+            var todoItemControls = _todos.Select(todo => new TodoItemControl(todo, users, OnTodoUpdateAsync)).ToArray();
 
             TodoListView.Controls.AddRange(todoItemControls);
         }
 
-        private async void OnTodoUpdate(object sender, Todo todo)
+        private async void OnTodoUpdateAsync(object sender, Todo todo)
         {
             await _todoCommandService.EditAsync(todo);
         }
