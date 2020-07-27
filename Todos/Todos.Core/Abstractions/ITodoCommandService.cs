@@ -19,5 +19,7 @@ namespace Todos.Core.Abstractions
         Task<Todo> AssignToAsync(int todoId, int userId);
 
         Task<Todo> SetStatusAsync(int todoId, TodoStatus status);
+
+        Task<int> UpdateAsync(List<Todo> changedTodos);
     }
 }

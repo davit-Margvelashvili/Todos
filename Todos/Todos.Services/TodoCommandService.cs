@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Todos.Core.Abstractions;
 using Todos.Core.Exceptions;
@@ -76,6 +77,12 @@ namespace Todos.Services
             await _context.SaveChangesAsync();
 
             return todo;
+        }
+
+        public Task<int> UpdateAsync(List<Todo> changedTodos)
+        {
+            _context.Todos.UpdateRange(changedTodos);
+            return _context.SaveChangesAsync();
         }
     }
 }

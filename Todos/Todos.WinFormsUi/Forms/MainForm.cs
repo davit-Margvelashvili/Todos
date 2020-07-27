@@ -15,6 +15,9 @@ namespace Todos.WinFormsUi.Forms
         private readonly ITodoCommandService _todoCommandService;
 
         private List<Todo> _todos;
+        private List<User> _users;
+
+        private readonly HashSet<int> _changedRows = new HashSet<int>();
 
         public MainForm(ITodoQueryService todoQueryService, ITodoCommandService todoCommandService)
         {
@@ -31,10 +34,9 @@ namespace Todos.WinFormsUi.Forms
             todoEditorForm.ShowDialog();
         }
 
-        private void TodoEditorForm_TodoCreated(object sender, Todo newTodo)
+        private async void TodoEditorForm_TodoCreated(object sender, Todo newTodo)
         {
             _todos.Add(newTodo);
-            PopulateTodosAsync();
 
             if (sender is TodoEditorForm editorForm)
                 editorForm.TodoCreated -= TodoEditorForm_TodoCreated;
@@ -52,27 +54,73 @@ namespace Todos.WinFormsUi.Forms
 
         private void OnSuccessfulLogin(object sender, User e)
         {
-            UserNameLabel.Text += e.Name;
         }
 
         private async Task LoadDataAsync()
         {
             _todos = await _todoQueryService.GetAllAsync();
-            await PopulateTodosAsync();
-        }
+            _users = await ServiceContainer.Get<IUserQueryService>().GetAllAsync();
+            _users.Insert(0, User.Empty);
 
-        private async Task PopulateTodosAsync()
-        {
-            var users = await ServiceContainer.Get<IUserQueryService>().GetAllAsync();
-            users.Insert(0, User.Empty);
-            var todoItemControls = _todos.Select(todo => new TodoItemControl(todo, users, OnTodoUpdateAsync)).ToArray();
+            TodoGrid.AutoGenerateColumns = false;
 
-            TodoListView.Controls.AddRange(todoItemControls);
+            TodoGrid.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = nameof(Todo.Title),
+                Name = "Title"
+            });
+
+            TodoGrid.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = nameof(Todo.Description),
+                Name = "Description"
+            });
+
+            TodoGrid.Columns.Add(new DataGridViewComboBoxColumn()
+            {
+                DataSource = Enum.GetValues(typeof(TodoStatus)),
+                DataPropertyName = nameof(Todo.Status),
+                Name = "Status"
+            });
+
+            TodoGrid.Columns.Add(new DataGridViewComboBoxColumn()
+            {
+                DataSource = Enum.GetValues(typeof(TodoPriority)),
+                DataPropertyName = nameof(Todo.Priority),
+                Name = "Priority"
+            });
+
+            TodoGrid.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = nameof(Todo.StartDate),
+                Name = "Start Date"
+            });
+
+            TodoGrid.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                DataPropertyName = nameof(Todo.DueDate),
+                Name = "Due Date"
+            });
+
+            TodoGrid.DataSource = _todos;
         }
 
         private async void OnTodoUpdateAsync(object sender, Todo todo)
         {
             await _todoCommandService.EditAsync(todo);
+        }
+
+        private void TodoGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            _changedRows.Add(e.RowIndex);
+        }
+
+        private async void SaveChangesButton_ClickAsync(object sender, EventArgs e)
+        {
+            var changedTodos = _changedRows.Select(i => TodoGrid.Rows[i].DataBoundItem as Todo).ToList();
+            var changes = await _todoCommandService.UpdateAsync(changedTodos);
+
+            MessageBox.Show($"{changes} todos updated", "Successfully Updated");
         }
     }
 }

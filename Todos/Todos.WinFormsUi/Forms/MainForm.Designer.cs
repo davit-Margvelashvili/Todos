@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.AddTodoButton = new System.Windows.Forms.Button();
-            this.TodoListView = new System.Windows.Forms.FlowLayoutPanel();
-            this.UserNameLabel = new System.Windows.Forms.Label();
+            this.TodoGrid = new System.Windows.Forms.DataGridView();
+            this.SaveChangesButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.TodoGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // AddTodoButton
@@ -40,55 +41,61 @@
             this.AddTodoButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(186)))), ((int)(((byte)(168)))));
             this.AddTodoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AddTodoButton.ForeColor = System.Drawing.Color.White;
-            this.AddTodoButton.Location = new System.Drawing.Point(292, 550);
+            this.AddTodoButton.Location = new System.Drawing.Point(12, 563);
             this.AddTodoButton.Name = "AddTodoButton";
-            this.AddTodoButton.Size = new System.Drawing.Size(773, 35);
+            this.AddTodoButton.Size = new System.Drawing.Size(198, 35);
             this.AddTodoButton.TabIndex = 0;
             this.AddTodoButton.Text = "Add Todo";
             this.AddTodoButton.UseVisualStyleBackColor = false;
             this.AddTodoButton.Click += new System.EventHandler(this.AddTodoButton_Click);
             // 
-            // TodoListView
+            // TodoGrid
             // 
-            this.TodoListView.AutoScroll = true;
-            this.TodoListView.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.TodoListView.Location = new System.Drawing.Point(292, 12);
-            this.TodoListView.Name = "TodoListView";
-            this.TodoListView.Size = new System.Drawing.Size(773, 532);
-            this.TodoListView.TabIndex = 9;
-            this.TodoListView.WrapContents = false;
+            this.TodoGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TodoGrid.Dock = System.Windows.Forms.DockStyle.Right;
+            this.TodoGrid.Location = new System.Drawing.Point(216, 0);
+            this.TodoGrid.Name = "TodoGrid";
+            this.TodoGrid.Size = new System.Drawing.Size(861, 610);
+            this.TodoGrid.TabIndex = 1;
+            this.TodoGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.TodoGrid_CellValueChanged);
             // 
-            // UserNameLabel
+            // SaveChangesButton
             // 
-            this.UserNameLabel.AutoSize = true;
-            this.UserNameLabel.Location = new System.Drawing.Point(24, 34);
-            this.UserNameLabel.Name = "UserNameLabel";
-            this.UserNameLabel.Size = new System.Drawing.Size(51, 22);
-            this.UserNameLabel.TabIndex = 10;
-            this.UserNameLabel.Text = "Hello ";
+            this.SaveChangesButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(122)))), ((int)(((byte)(111)))));
+            this.SaveChangesButton.FlatAppearance.BorderSize = 0;
+            this.SaveChangesButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(186)))), ((int)(((byte)(168)))));
+            this.SaveChangesButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SaveChangesButton.ForeColor = System.Drawing.Color.White;
+            this.SaveChangesButton.Location = new System.Drawing.Point(12, 522);
+            this.SaveChangesButton.Name = "SaveChangesButton";
+            this.SaveChangesButton.Size = new System.Drawing.Size(198, 35);
+            this.SaveChangesButton.TabIndex = 2;
+            this.SaveChangesButton.Text = "Save Changes";
+            this.SaveChangesButton.UseVisualStyleBackColor = false;
+            this.SaveChangesButton.Click += new System.EventHandler(this.SaveChangesButton_ClickAsync);
             // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1077, 610);
-            this.Controls.Add(this.UserNameLabel);
-            this.Controls.Add(this.TodoListView);
+            this.Controls.Add(this.SaveChangesButton);
+            this.Controls.Add(this.TodoGrid);
             this.Controls.Add(this.AddTodoButton);
-            this.Font = new System.Drawing.Font("Sylfaen", 12F);
+            this.Font = new System.Drawing.Font("Sylfaen", 10F);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "Todos";
             this.Load += new System.EventHandler(this.MainForm_LoadAsync);
+            ((System.ComponentModel.ISupportInitialize)(this.TodoGrid)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button AddTodoButton;
-        private System.Windows.Forms.FlowLayoutPanel TodoListView;
-        private System.Windows.Forms.Label UserNameLabel;
+        private System.Windows.Forms.DataGridView TodoGrid;
+        private System.Windows.Forms.Button SaveChangesButton;
     }
 }
 
