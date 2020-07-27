@@ -31,6 +31,8 @@
             this.AddTodoButton = new System.Windows.Forms.Button();
             this.TodoListView = new System.Windows.Forms.FlowLayoutPanel();
             this.UserNameLabel = new System.Windows.Forms.Label();
+            this.todoGrid = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.todoGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // AddTodoButton
@@ -67,10 +69,19 @@
             this.UserNameLabel.TabIndex = 10;
             this.UserNameLabel.Text = "Hello ";
             // 
+            // todoGrid
+            // 
+            this.todoGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.todoGrid.Location = new System.Drawing.Point(13, 72);
+            this.todoGrid.Name = "todoGrid";
+            this.todoGrid.Size = new System.Drawing.Size(240, 218);
+            this.todoGrid.TabIndex = 11;
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1077, 610);
+            this.Controls.Add(this.todoGrid);
             this.Controls.Add(this.UserNameLabel);
             this.Controls.Add(this.TodoListView);
             this.Controls.Add(this.AddTodoButton);
@@ -79,6 +90,7 @@
             this.Name = "MainForm";
             this.Text = "Todos";
             this.Load += new System.EventHandler(this.MainForm_LoadAsync);
+            ((System.ComponentModel.ISupportInitialize)(this.todoGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -89,6 +101,7 @@
         private System.Windows.Forms.Button AddTodoButton;
         private System.Windows.Forms.FlowLayoutPanel TodoListView;
         private System.Windows.Forms.Label UserNameLabel;
+        private System.Windows.Forms.DataGridView todoGrid;
     }
 }
 

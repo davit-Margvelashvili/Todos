@@ -27,25 +27,25 @@ namespace Todos.WinFormsUi.Forms
         private void AddTodoButton_Click(object sender, EventArgs e)
         {
             var todoEditorForm = new TodoEditorForm();
-            todoEditorForm.TodoCreated += TodoEditorForm_TodoCreated;
+            todoEditorForm.TodoCreated += TodoEditorForm_TodoCreatedAsync;
             todoEditorForm.ShowDialog();
         }
 
-        private void TodoEditorForm_TodoCreated(object sender, Todo newTodo)
+        private async void TodoEditorForm_TodoCreatedAsync(object sender, Todo newTodo)
         {
             _todos.Add(newTodo);
-            PopulateTodos();
+            await PopulateTodosAsync();
 
             if (sender is TodoEditorForm editorForm)
-                editorForm.TodoCreated -= TodoEditorForm_TodoCreated;
+                editorForm.TodoCreated -= TodoEditorForm_TodoCreatedAsync;
         }
 
         private async void MainForm_LoadAsync(object sender, EventArgs e)
         {
-            var loginForm = new LoginForm();
-            loginForm.Success += OnSuccessfulLogin;
-            if (loginForm.ShowDialog() != DialogResult.OK)
-                Application.Exit();
+            //var loginForm = new LoginForm();
+            //loginForm.Success += OnSuccessfulLogin;
+            //if (loginForm.ShowDialog() != DialogResult.OK)
+            //    Application.Exit();
 
             await LoadDataAsync();
         }
@@ -58,12 +58,20 @@ namespace Todos.WinFormsUi.Forms
         private async Task LoadDataAsync()
         {
             _todos = await _todoQueryService.GetAllAsync();
-            PopulateTodos();
+
+            var todoSource = new BindingSource();
+
+            todoSource.DataSource = _todos;
+            todoGrid.DataSource = todoSource;
+
+            await PopulateTodosAsync();
         }
 
-        private void PopulateTodos()
+        private async Task PopulateTodosAsync()
         {
-            var todoItemControls = _todos.Select(todo => new TodoItemControl(todo, OnTodoUpdate)).ToArray();
+            var users = await ServiceContainer.Get<IUserQueryService>().GetAllAsync();
+            users.Insert(0, User.Empty);
+            var todoItemControls = _todos.Select(todo => new TodoItemControl(todo, users, OnTodoUpdate)).ToArray();
 
             TodoListView.Controls.AddRange(todoItemControls);
         }
